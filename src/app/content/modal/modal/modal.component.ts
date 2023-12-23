@@ -7,8 +7,11 @@ import {ModalService} from "../../../services/modal.service";
   templateUrl: './modal.component.html',
 })
 export class ModalComponent implements OnDestroy {
-  showModal: boolean = false;
+  showModal = false;
   private subscription: Subscription;
+
+  userName = '';
+  generatedToken = '';
 
   constructor(public modalService: ModalService) {
     this.subscription = this.modalService.showModal$.subscribe(
@@ -16,6 +19,10 @@ export class ModalComponent implements OnDestroy {
         this.showModal = show;
       }
     );
+  }
+
+  generateToken() {
+    console.log('token is generated');
   }
 
   ngOnDestroy() {

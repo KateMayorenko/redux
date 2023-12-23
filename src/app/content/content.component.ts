@@ -3,6 +3,8 @@ import {QuoteService} from "../services/quote.service";
 import {CountdownService} from "../services/countdown.service";
 import {Subscription} from "rxjs";
 import {ModalService} from "../services/modal.service";
+import {ClickCountService} from "../services/click-count.service";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-content',
@@ -19,7 +21,19 @@ export class ContentComponent implements OnInit {
   private countdownSubscription: Subscription = new Subscription();
   toggleButtonText = 'Pause';
 
-  constructor(public countdownService: CountdownService, public quoteService: QuoteService) {
+  constructor(
+    public countdownService: CountdownService,
+    public quoteService: QuoteService,
+    public clickCountService: ClickCountService,
+    private store: Store<{
+      content: {
+        timeLeftFormatted: string
+      },
+      clickCount: {
+        clickCount: number
+      }
+    }>
+  ) {
   }
 
   ngOnInit() {
@@ -30,6 +44,7 @@ export class ContentComponent implements OnInit {
       this.timeLeftFormatted = this.formatTime(time);
     });
   }
+
   startCountdown(minutes: number) {
     this.countdownSubscription = this.countdownService.startCountdown(minutes).subscribe(time => {
       this.timeLeft = time;
@@ -48,6 +63,17 @@ export class ContentComponent implements OnInit {
     this.paused = !this.paused;
   }
 
+  handleClick(event: Event | undefined) {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.clickCountService.incrementClickCount();
+  }
+
+  get todayClickCount(): number {
+    return this.clickCountService.getTodayClickCount();
+  }
+
   formatTime(timeInSeconds: number): string {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = (timeInSeconds % 60).toFixed(1); // Keeping one decimal place for seconds
@@ -60,5 +86,7 @@ export class ContentComponent implements OnInit {
     }
     this.countdownService.pauseCountdown();
   }
+
+  protected readonly event = event;
 }
 

@@ -2,7 +2,7 @@
   <div class="flex items-center justify-center w-full">
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
       <div class="grid grid-cols-3 divide-x divide-gray-900/5 bg-gray-50">
-        <a href="#" (click)="startCountdown(25)"
+        <a href="#" (click)="startCountdown(25); handleClick(event)"
            class="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-4 text-gray-900">
           <svg class="h-4 w-4 text-gray-600 group-hover:text-indigo-600" fill="none" viewBox="0 0 24 24"
                stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -10,7 +10,7 @@
           </svg>
           Focus 25 min
         </a>
-        <a href="#" (click)="startCountdown(40)"
+        <a href="#" (click)="startCountdown(40); handleClick(event)"
            class="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-4 text-gray-900">
           <svg class="h-4 w-4 text-gray-600 group-hover:text-indigo-600" fill="none" viewBox="0 0 24 24"
                stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -18,7 +18,7 @@
           </svg>
           Focus 40 min
         </a>
-        <a href="#" (click)="startCountdown(60)"
+        <a href="#" (click)="startCountdown(60); handleClick(event)"
            class="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-4 text-gray-900">
           <svg class="h-4 w-4 text-gray-600 group-hover:text-indigo-600" fill="none" viewBox="0 0 24 24"
                stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -38,7 +38,7 @@
             </svg>
           </div>
           <div class="flex-auto">
-            <a href="#" class="block font-semibold text-gray-900" (click)="startCountdown(30)">
+            <a href="#" class="block font-semibold text-gray-900" (click)="startCountdown(30); handleClick(event)">
               Start a focus time (30 minutes)
               <span class="absolute inset-0"></span>
             </a>
@@ -66,7 +66,7 @@
               <path stroke-linecap="round" stroke-linejoin="round"
                     d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59"/>
             </svg>
-            Times clicked today:
+            Times clicked today: {{todayClickCount}}
           </a>
         </div>
         <div class="bg-red-400" *ngIf="timeLeft">
