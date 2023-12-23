@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {ModalService} from "../services/modal.service";
 import {Subscription, take} from "rxjs";
 import {Input} from "@angular/core";
@@ -10,19 +10,21 @@ import {Input} from "@angular/core";
 })
 export class HeaderComponent implements OnDestroy {
 
-  @Input() modalState: string = 'close';
+  @Input() showModal: boolean = false;
   private modalStateSubscription: Subscription = new Subscription();
 
   constructor(public modalService: ModalService) {
   }
 
   toggleModal() {
-    if (this.modalState === 'close') {
-      this.modalService.open();
-    } else (this.modalService.close());
-    this.modalStateSubscription = this.modalService.watch().pipe(take(1)).subscribe(state => {
-      this.modalState = state;
-    });
+    if (this.showModal === false) {
+      this.modalService.openModal();
+    } else (this.modalService.closeModal());
+    this.modalStateSubscription = this.modalService.showModal$.subscribe(
+      (show: boolean) => {
+        this.showModal = show;
+      }
+    );
   }
 
   ngOnDestroy() {

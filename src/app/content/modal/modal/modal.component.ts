@@ -1,26 +1,24 @@
-import {Component, Input} from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import {ModalService} from "../../../services/modal.service";
-import {Subscription, take} from "rxjs";
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.css']
 })
-export class ModalComponent {
-
-  @Input() modalState: string = '';
+export class ModalComponent implements OnDestroy {
+  showModal: boolean = false;
+  private subscription: Subscription;
 
   constructor(public modalService: ModalService) {
+    this.subscription = this.modalService.showModal$.subscribe(
+      (show: boolean) => {
+        this.showModal = show;
+      }
+    );
   }
 
-  closeModal() {
-    this.modalState === 'close';
-    this.modalService.close();
-    this.modalService.watch().pipe(take(1)).subscribe();
-  }
-
-  submitAction() {
-    console.log('submit user');
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

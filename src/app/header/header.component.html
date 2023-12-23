@@ -42,6 +42,6 @@
 </header>
 
 
-<ng-container *ngIf="modalState === 'open'">
-<app-modal [modalState] = "modalState"></app-modal>
+<ng-container *ngIf="showModal">
+<app-modal></app-modal>
 </ng-container>
