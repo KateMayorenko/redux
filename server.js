@@ -7,7 +7,7 @@ app.use(cors());
 
 app.get('/api/random-quote', async (req, res) => {
   try {
-    const response = await axios.get('https://api.quotable.io/random?tags=work');
+    const response = await axios.get('https://api.quotable.io/random?tags=success');
     res.json(response.data.content);
   } catch (error) {
     console.error('Error fetching quote:', error);
