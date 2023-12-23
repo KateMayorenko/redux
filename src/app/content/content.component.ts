@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {QuoteService} from "../../quote.service";
-import {CountdownService} from "../../countdown.service";
+import {QuoteService} from "../services/quote.service";
+import {CountdownService} from "../services/countdown.service";
 import {Subscription} from "rxjs";
+import {ModalService} from "../services/modal.service";
 
 @Component({
   selector: 'app-content',
@@ -11,12 +12,15 @@ import {Subscription} from "rxjs";
 export class ContentComponent implements OnInit {
 
   quote: any;
-  timeLeft: any;
-  timeLeftFormatted: string = '';
-  paused: boolean = false;
-  private countdownSubscription: Subscription = new Subscription();
 
-  constructor(public countdownService: CountdownService, public quoteService: QuoteService) { }
+  timeLeft: any;
+  timeLeftFormatted = '';
+  paused = false;
+  private countdownSubscription: Subscription = new Subscription();
+  toggleButtonText = 'Pause';
+
+  constructor(public countdownService: CountdownService, public quoteService: QuoteService) {
+  }
 
   ngOnInit() {
     this.quoteService.getQuote().subscribe(quote => {
@@ -26,7 +30,6 @@ export class ContentComponent implements OnInit {
       this.timeLeftFormatted = this.formatTime(time);
     });
   }
-
   startCountdown(minutes: number) {
     this.countdownSubscription = this.countdownService.startCountdown(minutes).subscribe(time => {
       this.timeLeft = time;
@@ -34,14 +37,14 @@ export class ContentComponent implements OnInit {
     });
   }
 
-
   togglePause() {
     if (this.paused) {
       this.countdownService.resumeCountdown();
+      this.toggleButtonText = 'Pause';
     } else {
       this.countdownService.pauseCountdown();
+      this.toggleButtonText = 'Resume';
     }
-    console.log(this.paused);
     this.paused = !this.paused;
   }
 
