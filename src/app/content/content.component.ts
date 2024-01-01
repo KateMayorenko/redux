@@ -1,18 +1,21 @@
 import {Component, OnInit} from '@angular/core';
 import {QuoteService} from "../services/quote.service";
 import {CountdownService} from "../services/countdown.service";
-import {Subscription} from "rxjs";
+import {Subscription, Observable, take} from "rxjs";
 import {ModalService} from "../services/modal.service";
-import {ClickCountService} from "../services/click-count.service";
 import {Store} from "@ngrx/store";
+import {tap} from 'rxjs/operators';
+import {ClickCountState, initialState} from "./state/click-count/click-count.state";
+import * as ClickCountActions from "../content/state/click-count/click-count.actions"
+import {Actions, ofType, createEffect} from '@ngrx/effects';
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.css']
 })
-export class ContentComponent implements OnInit {
 
+export class ContentComponent implements OnInit {
   quote: any;
 
   timeLeft: any;
@@ -21,22 +24,18 @@ export class ContentComponent implements OnInit {
   private countdownSubscription: Subscription = new Subscription();
   toggleButtonText = 'Pause';
 
+  todayClickCount$: Observable<number> = new Observable<number>();
+
   constructor(
     public countdownService: CountdownService,
     public quoteService: QuoteService,
-    public clickCountService: ClickCountService,
-    private store: Store<{
-      content: {
-        timeLeftFormatted: string
-      },
-      clickCount: {
-        clickCount: number
-      }
-    }>
+    private store: Store<{ clickCount: ClickCountState }>
   ) {
+    this.todayClickCount$ = this.store.select(state => state.clickCount.count);
   }
 
   ngOnInit() {
+    this.initializeTodayClickCount();
     this.quoteService.getQuote().subscribe(quote => {
       this.quote = quote;
     });
@@ -44,6 +43,16 @@ export class ContentComponent implements OnInit {
       this.timeLeftFormatted = this.formatTime(time);
     });
   }
+
+  private initializeTodayClickCount() {
+    const today = new Date().toDateString();
+    const storedCount = localStorage.getItem('clickCount');
+    const count = storedCount ? Number(storedCount) : 0;
+    const lastUpdated = localStorage.getItem('lastUpdated') || today;
+
+    this.store.dispatch(ClickCountActions.loadClickCount({ count, lastUpdated }));
+  }
+
 
   startCountdown(minutes: number) {
     this.countdownSubscription = this.countdownService.startCountdown(minutes).subscribe(time => {
@@ -67,11 +76,7 @@ export class ContentComponent implements OnInit {
     if (event) {
       event.stopPropagation();
     }
-    this.clickCountService.incrementClickCount();
-  }
-
-  get todayClickCount(): number {
-    return this.clickCountService.getTodayClickCount();
+    this.store.dispatch(ClickCountActions.incrementClickCount());
   }
 
   formatTime(timeInSeconds: number): string {

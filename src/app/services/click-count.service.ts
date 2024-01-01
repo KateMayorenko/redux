@@ -7,7 +7,7 @@ export class ClickCountService {
   private countKey: string = 'clickCount';
   private dateKey: string = 'clickDate';
 
-  incrementClickCount() {
+/*  incrementClickCount() {
     const today = new Date().toDateString();
     const lastClickDate = localStorage.getItem(this.dateKey);
     let clickCount = 0;
@@ -19,7 +19,7 @@ export class ClickCountService {
     clickCount++;
     localStorage.setItem(this.countKey, clickCount.toString());
     localStorage.setItem(this.dateKey, today);
-  }
+  }*/
 
   getTodayClickCount(): number {
     const today = new Date().toDateString();

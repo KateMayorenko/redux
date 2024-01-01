@@ -1,3 +1,8 @@
-import {createAction} from "@ngrx/store";
+import {createAction, props} from "@ngrx/store";
 
-export const incrementClicks = createAction('[App] Increment Clicks');
+export const loadClickCount = createAction(
+  '[Click Count] Load Today Count',
+  props<{ count: any, lastUpdated: string }>()
+);
+
+export const incrementClickCount = createAction('[Click Count] Increment');

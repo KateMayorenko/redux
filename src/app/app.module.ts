@@ -11,6 +11,8 @@ import {StoreModule} from "@ngrx/store";
 import {contentReducer} from "./content/state/content/content.reducer";
 import {clickCountReducer} from "./content/state/click-count/click-count.reducer";
 import {modalReducer} from "./content/state/modal/modal.reducer";
+import {ClickCountEffects} from "./content/state/click-count/click-count.effects";
+import {EffectsModule} from "@ngrx/effects";
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import {modalReducer} from "./content/state/modal/modal.reducer";
     FormsModule,
     BrowserModule,
     HttpClientModule,
-    StoreModule.forRoot({content: contentReducer, clickCount: clickCountReducer, modal: modalReducer})
+    StoreModule.forRoot({content: contentReducer, clickCount: clickCountReducer, modal: modalReducer}),
+    EffectsModule.forRoot([ClickCountEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]
