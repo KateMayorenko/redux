@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {Subscription} from "rxjs";
 import {CountdownService} from "../../services/countdown.service";
-import {ClickCountService} from "../../services/click-count.service";
 
 @Component({
   selector: 'app-countdown-options',
@@ -13,20 +12,13 @@ export class CountdownOptionsComponent {
   timeLeftFormatted = '';
   private countdownSubscription: Subscription = new Subscription();
 
-  constructor(public countdownService: CountdownService, public clickCountService: ClickCountService,) {
+  constructor(public countdownService: CountdownService) {
   }
 
   startCountdown(minutes: number) {
     this.countdownSubscription = this.countdownService.startCountdown(minutes).subscribe(time => {
       this.timeLeftFormatted = this.formatTime(time);
     });
-  }
-
-  handleClick(event: Event | undefined) {
-    if (event) {
-      event.stopPropagation();
-    }
-    this.clickCountService.incrementClickCount();
   }
 
   formatTime(timeInSeconds: number): string {
