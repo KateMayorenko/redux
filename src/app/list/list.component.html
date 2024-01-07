@@ -2,14 +2,14 @@
 <div class="flex items-center justify-center w-full">
   <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
     <div class="w-96 text-gray-900 bg-white border border-gray-200 rounded-lg">
-      <button type="button" *ngFor="let task of list$ | async; let i = index;"
+      <button type="button" *ngFor="let el of list$ | async; let i = index;"
               class="relative inline-flex items-center justify-between w-full px-4 py-2 text-sm font-medium border-b border-gray-200 rounded-t-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
 
         <!-- Checkbox -->
-        <input type="checkbox" class="form-checkbox">
+        <input type="checkbox" class="form-checkbox" [checked]="el.checked" (change)="saveChecked(i)">
 
         <!-- Task Text -->
-        {{ task }}
+        {{ el.task }}
 
         <!-- Remove SVG Button -->
         <button (click)="removeElement(i)">
