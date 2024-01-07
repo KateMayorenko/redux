@@ -1,4 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Store} from "@ngrx/store";
+import * as TaskActions from "./state/list/list.actions";
+import {Observable} from "rxjs";
+import {selectTasks} from "./state/list/list.selectors";
 
 @Component({
   selector: 'app-list',
@@ -6,14 +10,16 @@ import {Component} from '@angular/core';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent {
-  taskArray: string[] = [];
+  list$: Observable<string[]> = this.store.select(selectTasks);
+
+  constructor(private store: Store<{ list: string[] }>) {}
 
   addElement(newElement: string) {
-    this.taskArray.push(newElement);
+    this.store.dispatch(TaskActions.addTask({task: newElement}));
   }
 
   removeElement(index: number) {
-    this.taskArray.splice(index, 1);
+    this.store.dispatch(TaskActions.removeTask({index}));
   }
 
 }

@@ -15,6 +15,9 @@ import {ClickCountEffects} from "./content/state/click-count/click-count.effects
 import {EffectsModule} from "@ngrx/effects";
 import { ListComponent } from './list/list.component';
 import { InputFieldComponent } from './list/input-field/input-field.component';
+import {listReducer} from "./list/state/list/list.reducer";
+import {ListEffects} from "./list/state/list/list.effects";
+
 
 @NgModule({
   declarations: [
@@ -29,8 +32,8 @@ import { InputFieldComponent } from './list/input-field/input-field.component';
     FormsModule,
     BrowserModule,
     HttpClientModule,
-    StoreModule.forRoot({content: contentReducer, clickCount: clickCountReducer, modal: modalReducer}),
-    EffectsModule.forRoot([ClickCountEffects]),
+    StoreModule.forRoot({content: contentReducer, clickCount: clickCountReducer, modal: modalReducer, list: listReducer}),
+    EffectsModule.forRoot([ClickCountEffects, ListEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]
