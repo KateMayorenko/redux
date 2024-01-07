@@ -13,13 +13,17 @@ import {clickCountReducer} from "./content/state/click-count/click-count.reducer
 import {modalReducer} from "./content/state/modal/modal.reducer";
 import {ClickCountEffects} from "./content/state/click-count/click-count.effects";
 import {EffectsModule} from "@ngrx/effects";
+import { ListComponent } from './list/list.component';
+import { InputFieldComponent } from './list/input-field/input-field.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ContentComponent,
     HeaderComponent,
-    ModalComponent
+    ModalComponent,
+    ListComponent,
+    InputFieldComponent
   ],
   imports: [
     FormsModule,

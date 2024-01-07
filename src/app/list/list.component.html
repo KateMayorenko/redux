@@ -1,0 +1,24 @@
+<app-input-field (newElement)="addElement($event)"></app-input-field>
+<div class="flex items-center justify-center w-full">
+  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="w-96 text-gray-900 bg-white border border-gray-200 rounded-lg">
+      <button type="button" *ngFor="let task of taskArray; let i = index;"
+              class="relative inline-flex items-center justify-between w-full px-4 py-2 text-sm font-medium border-b border-gray-200 rounded-t-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
+
+        <!-- Checkbox -->
+        <input type="checkbox" class="form-checkbox">
+
+        <!-- Task Text -->
+        {{ task }}
+
+        <!-- Remove SVG Button -->
+        <button (click)="removeElement(i)">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"></path>
+          </svg>
+        </button>
+      </button>
+    </div>
+  </div>
+</div>
+
