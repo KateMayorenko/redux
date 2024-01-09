@@ -17,6 +17,7 @@ import { ListComponent } from './list/list.component';
 import { InputFieldComponent } from './list/input-field/input-field.component';
 import {listReducer} from "./list/state/list/list.reducer";
 import {ListEffects} from "./list/state/list/list.effects";
+import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 
 
 @NgModule({
@@ -34,6 +35,11 @@ import {ListEffects} from "./list/state/list/list.effects";
     HttpClientModule,
     StoreModule.forRoot({content: contentReducer, clickCount: clickCountReducer, modal: modalReducer, list: listReducer}),
     EffectsModule.forRoot([ClickCountEffects, ListEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: false,
+      name: 'redux-pomodoro',
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
