@@ -1,35 +1,30 @@
-import {Component, OnDestroy} from '@angular/core';
-import {ModalService} from "../services/modal.service";
-import {Subscription, take} from "rxjs";
-import {Input} from "@angular/core";
+import {Component, OnInit} from '@angular/core';
+import {Store} from "@ngrx/store";
+import * as ModalActions from "src/app/header/state/modal/modal.actions"
+import {Observable} from "rxjs";
+import {AppState} from "./state/modal/modal.state";
+import {selectToggle} from "./state/modal/modal.selectors";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnDestroy {
+export class HeaderComponent implements OnInit {
 
-  @Input() showModal: boolean = false;
-  private modalStateSubscription: Subscription = new Subscription();
+  showModal$: Observable<boolean> = this.store.select(selectToggle);
 
-  constructor(public modalService: ModalService) {
+  constructor(private store: Store<AppState>) {
+    this.showModal$.subscribe(res => {
+      console.log(res);
+    })
+  }
+
+  ngOnInit(): void {
+
   }
 
   toggleModal() {
-    if (this.showModal === false) {
-      this.modalService.openModal();
-    } else (this.modalService.closeModal());
-    this.modalStateSubscription = this.modalService.showModal$.subscribe(
-      (show: boolean) => {
-        this.showModal = show;
-      }
-    );
-  }
-
-  ngOnDestroy() {
-    if (this.modalStateSubscription) {
-      this.modalStateSubscription.unsubscribe();
-    }
+    this.store.dispatch(ModalActions.toggleModal());
   }
 }

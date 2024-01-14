@@ -1,20 +1,15 @@
-import {createReducer, on} from "@ngrx/store";
+import { createReducer, on } from '@ngrx/store';
+import * as UserActions from './user.actions';
 import {initialState} from './user.state'
-import {startCountdown} from "./user.actions";
 
-export function userReducer(state = initialState, action: any) {
-  switch (action.type) {
-    case 'CREATE_USER_NAME':
-      return {
-        ...state,
-        user: state.user
-      };
-    case 'CREATE_TOKEN':
-      return {
-        ...state,
-        token: state.token
-      };
-    default:
-      return state;
-  }
-}
+export const userReducer = createReducer(
+  initialState,
+  on(UserActions.createUserName, (state, { userName }) => ({
+    ...state,
+    user: userName
+  })),
+  on(UserActions.createToken, (state, { isCreated }) => ({
+    ...state,
+    isCreated: isCreated
+  }))
+);

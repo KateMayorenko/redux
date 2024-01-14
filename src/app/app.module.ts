@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
 import {AppComponent} from './app.component';
 import {ContentComponent} from './content/content.component';
 import {HeaderComponent} from './header/header.component';
@@ -10,7 +9,7 @@ import {FormsModule} from "@angular/forms";
 import {StoreModule} from "@ngrx/store";
 import {contentReducer} from "./content/state/content/content.reducer";
 import {clickCountReducer} from "./content/state/click-count/click-count.reducer";
-import {modalReducer} from "./content/state/modal/modal.reducer";
+import {modalReducer} from "./header/state/modal/modal.reducer";
 import {ClickCountEffects} from "./content/state/click-count/click-count.effects";
 import {EffectsModule} from "@ngrx/effects";
 import { ListComponent } from './list/list.component';

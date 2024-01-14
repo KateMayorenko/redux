@@ -38,13 +38,13 @@
       <b>Pomodoro - focus on important <span aria-hidden="true"></span></b>
     </div>
     <div class="lg:flex lg:flex-1 lg:justify-end">
-      <a href="#" class="text-sm font-semibold text-gray-900" (click)="toggleModal()">Log in <span
+      <a href="#" class="text-sm font-semibold text-gray-900" (click)="toggleModal()">Log in<span
         aria-hidden="true">&rarr;</span></a>
     </div>
   </nav>
 </header>
 
 
-<ng-container *ngIf="showModal">
-<app-modal></app-modal>
+<ng-container *ngIf="showModal$ | async">
+<app-modal ></app-modal>
 </ng-container>

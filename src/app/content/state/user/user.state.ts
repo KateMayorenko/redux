@@ -1,4 +1,9 @@
-const initialState = {
+export interface UserState {
+  user: string,
+  isCreated: boolean
+}
+
+export const initialState = {
   user: 'Default user',
-  token: '0'
+  isCreated: false
 }

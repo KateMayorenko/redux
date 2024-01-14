@@ -1,31 +1,25 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import {ModalService} from "../../../services/modal.service";
+import {Component} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Store} from "@ngrx/store";
+import * as ModalActions from "../../../header/state/modal/modal.actions"
+import {AppState} from "../../../header/state/modal/modal.state";
+import {selectToggle} from "../../../header/state/modal/modal.selectors";
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
 })
-export class ModalComponent implements OnDestroy {
-  showModal = false;
-  private subscription: Subscription;
+export class ModalComponent {
+  showModal$: Observable<boolean> = new Observable<boolean>();
 
   userName = '';
   generatedToken = '';
 
-  constructor(public modalService: ModalService) {
-    this.subscription = this.modalService.showModal$.subscribe(
-      (show: boolean) => {
-        this.showModal = show;
-      }
-    );
+  constructor(private store: Store<AppState>) {
+    this.showModal$ = this.store.select(selectToggle);
   }
 
-  generateToken() {
-    console.log('token is generated');
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  toggleModal() {
+    this.store.dispatch(ModalActions.toggleModal());
   }
 }

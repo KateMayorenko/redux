@@ -1,4 +1,11 @@
-import {createAction} from "@ngrx/store";
+import { createAction, props } from '@ngrx/store';
 
-export const createUserName = createAction('[App] Create User name', props<{ user: string }>());
-export const createToken = createAction('[App] Create token', props<{ token: string }>());
+export const createUserName = createAction(
+  '[User] Create User Name',
+  props<{ userName: string }>()
+);
+
+export const createToken = createAction(
+  '[User] Check if User is created',
+  props<{ isCreated: boolean }>()
+);
