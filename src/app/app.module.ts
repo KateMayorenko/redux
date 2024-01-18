@@ -12,11 +12,13 @@ import {clickCountReducer} from "./content/state/click-count/click-count.reducer
 import {modalReducer} from "./header/state/modal/modal.reducer";
 import {ClickCountEffects} from "./content/state/click-count/click-count.effects";
 import {EffectsModule} from "@ngrx/effects";
-import { ListComponent } from './list/list.component';
-import { InputFieldComponent } from './list/input-field/input-field.component';
+import {ListComponent} from './list/list.component';
+import {InputFieldComponent} from './list/input-field/input-field.component';
 import {listReducer} from "./list/state/list/list.reducer";
 import {ListEffects} from "./list/state/list/list.effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
+import {countdownReducer} from "./content/state/countdown/countdown.reducer";
+import {CountdownEffects} from "./content/state/countdown/countdown.effects";
 
 
 @NgModule({
@@ -26,14 +28,20 @@ import {StoreDevtoolsModule} from "@ngrx/store-devtools";
     HeaderComponent,
     ModalComponent,
     ListComponent,
-    InputFieldComponent
+    InputFieldComponent,
   ],
   imports: [
     FormsModule,
     BrowserModule,
     HttpClientModule,
-    StoreModule.forRoot({content: contentReducer, clickCount: clickCountReducer, modal: modalReducer, list: listReducer}),
-    EffectsModule.forRoot([ClickCountEffects, ListEffects]),
+    StoreModule.forRoot({
+      content: contentReducer,
+      clickCount: clickCountReducer,
+      modal: modalReducer,
+      list: listReducer,
+      countdown: countdownReducer
+    }),
+    EffectsModule.forRoot([ClickCountEffects, ListEffects, CountdownEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: false,

@@ -1,61 +1,66 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {QuoteService} from "../services/quote.service";
-import {CountdownService} from "../services/countdown.service";
-import {Subscription, Observable} from "rxjs";
-import {Store} from "@ngrx/store";
-import {ClickCountState} from "./state/click-count/click-count.state";
-import * as ClickCountActions from "../content/state/click-count/click-count.actions"
+import { Component, OnInit } from '@angular/core';
+import { QuoteService } from '../services/quote.service';
+import {Observable, take} from 'rxjs';
+import { Store } from '@ngrx/store';
+import { ClickCountState } from './state/click-count/click-count.state';
+import * as ClickCountActions from '../content/state/click-count/click-count.actions';
+import * as CountdownActions from './state/countdown/countdown.actions';
+import { CountdownState } from './state/countdown/countdown.state';
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
-  styleUrls: ['./content.component.css']
+  styleUrls: ['./content.component.css'],
 })
-
-export class ContentComponent implements OnInit, OnDestroy {
+export class ContentComponent implements OnInit {
   quote: any;
-
-  timeLeft: any;
-  timeLeftFormatted = '';
-  paused = false;
-  private countdownSubscription: Subscription = new Subscription();
+  timeLeft: number = 0;
+  countdown$: Observable<number>;
   toggleButtonText = 'Pause';
 
-  todayClickCount$: Observable<number> = new Observable<number>();
+  todayClickCount$: Observable<number>;
+  isPaused$: Observable<boolean>;
 
   constructor(
-    public countdownService: CountdownService,
     public quoteService: QuoteService,
-    private store: Store<{ clickCount: ClickCountState }>
+    private store: Store<{ clickCount: ClickCountState; countdown: CountdownState }>
   ) {
-    this.todayClickCount$ = this.store.select(state => state.clickCount.count);
+    this.todayClickCount$ = this.store.select((state) => state.clickCount.count);
+    this.countdown$ = this.store.select((state) => state.countdown.timeLeft);
+    this.isPaused$ = this.store.select((state) => state.countdown.isPaused);
+
+    this.countdown$.subscribe((timeLeft) => {
+      this.timeLeft = timeLeft;
+    });
   }
 
   ngOnInit() {
-    this.quoteService.getQuote().subscribe(quote => {
+    this.quoteService.getQuote().subscribe((quote) => {
       this.quote = quote;
-    });
-    this.countdownSubscription = this.countdownService.getTime().subscribe(time => {
-      this.timeLeftFormatted = this.formatTime(time);
     });
   }
 
-  startCountdown(minutes: number) {
-    this.countdownSubscription = this.countdownService.startCountdown(minutes).subscribe(time => {
-      this.timeLeft = time;
-      this.timeLeftFormatted = this.formatTime(time);
-    });
+  startCountdown(duration: number) {
+    this.store.dispatch(CountdownActions.startCountdown({ duration }));
   }
 
   togglePause() {
-    if (this.paused) {
-      this.countdownService.resumeCountdown();
-      this.toggleButtonText = 'Pause';
-    } else {
-      this.countdownService.pauseCountdown();
-      this.toggleButtonText = 'Resume';
-    }
-    this.paused = !this.paused;
+    this.toggleButtonText = 'Pause';
+    this.isPaused$.pipe(take(1)).subscribe((isPaused) => {
+      if (isPaused) {
+        this.store.dispatch(CountdownActions.resumeCountdown({ timeLeft: this.timeLeft }));
+        this.toggleButtonText = 'Pause';
+      } else {
+        this.store.dispatch(CountdownActions.pauseCountdown({ timeLeft: this.timeLeft }));
+        this.toggleButtonText = 'Resume';
+      }
+    });
+  }
+
+  getFormattedTimeLeft(): string {
+    const minutes = Math.floor(this.timeLeft / 60);
+    const seconds = this.timeLeft % 60;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   }
 
   handleClick(event: Event | undefined) {
@@ -65,19 +70,5 @@ export class ContentComponent implements OnInit, OnDestroy {
     this.store.dispatch(ClickCountActions.incrementClickCount());
   }
 
-  formatTime(timeInSeconds: number): string {
-    const minutes = Math.floor(timeInSeconds / 60);
-    const seconds = (timeInSeconds % 60).toFixed(1); // Keeping one decimal place for seconds
-    return `${minutes}:${seconds.padStart(4, '0')}`; // Ensures seconds are always two digits
-  }
-
-  ngOnDestroy() {
-    if (this.countdownSubscription) {
-      this.countdownSubscription.unsubscribe();
-    }
-    this.countdownService.pauseCountdown();
-  }
-
   protected readonly event = event;
 }
-
