@@ -8,11 +8,11 @@ import {Task} from "./list.state";
 
 @Injectable()
 export class ListEffects {
-  saveToSessionStorage$ = createEffect(() => this.actions$.pipe(
+  saveToLocalStorage$ = createEffect(() => this.actions$.pipe(
     ofType(TaskActions.addTask, TaskActions.removeTask, TaskActions.checked),
     tap(() => {
       this.store.select(selectTasks).subscribe(tasks => {
-        sessionStorage.setItem('tasks', JSON.stringify(tasks));
+        localStorage.setItem('tasks', JSON.stringify(tasks));
       });
     })
   ), { dispatch: false });

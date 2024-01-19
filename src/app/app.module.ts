@@ -6,7 +6,7 @@ import {HeaderComponent} from './header/header.component';
 import {HttpClientModule} from "@angular/common/http";
 import {ModalComponent} from './content/modal/modal/modal.component';
 import {FormsModule} from "@angular/forms";
-import {StoreModule} from "@ngrx/store";
+import {ActionReducer, ActionReducerMap, MetaReducer, StoreModule} from "@ngrx/store";
 import {contentReducer} from "./content/state/content/content.reducer";
 import {clickCountReducer} from "./content/state/click-count/click-count.reducer";
 import {ClickCountEffects} from "./content/state/click-count/click-count.effects";
@@ -20,6 +20,14 @@ import {countdownReducer} from "./content/state/countdown/countdown.reducer";
 import {CountdownEffects} from "./content/state/countdown/countdown.effects";
 import {userReducer} from "./header/state/user/user.reducer";
 import {AppRoutingModule} from "./app-routing.module";
+import {localStorageSync} from "ngrx-store-localstorage";
+
+
+export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
+  return localStorageSync({keys: ['tasks']})(reducer);
+}
+
+const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 
 
 @NgModule({
@@ -41,7 +49,7 @@ import {AppRoutingModule} from "./app-routing.module";
       user: userReducer,
       list: listReducer,
       countdown: countdownReducer
-    }),
+    }, {metaReducers}),
     EffectsModule.forRoot([ClickCountEffects, ListEffects, CountdownEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

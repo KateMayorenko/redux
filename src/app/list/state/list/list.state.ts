@@ -1,7 +1,7 @@
-const sessionStorageInitialState = JSON.parse(sessionStorage.getItem('tasks') || '[]');
+const localStorageInitialState = JSON.parse(localStorage.getItem('tasks') || '[]');
 
 export interface Task {
   task: string;
   checked: boolean;
 }
-export const initialState: Task[] = sessionStorageInitialState;
+export const initialState: Task[] = localStorageInitialState;
