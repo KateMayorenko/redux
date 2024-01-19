@@ -9,7 +9,6 @@ import {FormsModule} from "@angular/forms";
 import {StoreModule} from "@ngrx/store";
 import {contentReducer} from "./content/state/content/content.reducer";
 import {clickCountReducer} from "./content/state/click-count/click-count.reducer";
-import {modalReducer} from "./header/state/modal/modal.reducer";
 import {ClickCountEffects} from "./content/state/click-count/click-count.effects";
 import {EffectsModule} from "@ngrx/effects";
 import {ListComponent} from './list/list.component';
@@ -19,6 +18,8 @@ import {ListEffects} from "./list/state/list/list.effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {countdownReducer} from "./content/state/countdown/countdown.reducer";
 import {CountdownEffects} from "./content/state/countdown/countdown.effects";
+import {userReducer} from "./header/state/user/user.reducer";
+import {AppRoutingModule} from "./app-routing.module";
 
 
 @NgModule({
@@ -37,7 +38,7 @@ import {CountdownEffects} from "./content/state/countdown/countdown.effects";
     StoreModule.forRoot({
       content: contentReducer,
       clickCount: clickCountReducer,
-      modal: modalReducer,
+      user: userReducer,
       list: listReducer,
       countdown: countdownReducer
     }),
@@ -46,7 +47,8 @@ import {CountdownEffects} from "./content/state/countdown/countdown.effects";
       maxAge: 25,
       logOnly: false,
       name: 'redux-pomodoro',
-    })
+    }),
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

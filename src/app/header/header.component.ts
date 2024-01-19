@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
-import * as ModalActions from "src/app/header/state/modal/modal.actions"
 import {Observable} from "rxjs";
-import {AppState} from "./state/modal/modal.state";
-import {selectToggle} from "./state/modal/modal.selectors";
+import {selectToggle, selectUserName} from "./state/user/user.selectors";
+import {AppState} from "../content/state/countdown/countdown.state";
+import * as UserActions from "../header/state/user/user.actions"
+import {UserState} from "./state/user/user.state";
 
 @Component({
   selector: 'app-header',
@@ -13,10 +14,16 @@ import {selectToggle} from "./state/modal/modal.selectors";
 export class HeaderComponent implements OnInit {
 
   showModal$: Observable<boolean> = this.store.select(selectToggle);
+  userName$ = this.store.select(selectUserName);
+  isShown = false;
+  userName = '';
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<{countdown: AppState, user: UserState}>) {
     this.showModal$.subscribe(res => {
-      console.log(res);
+      this.isShown = res;
+    })
+    this.userName$.subscribe(res => {
+      this.userName = res;
     })
   }
 
@@ -25,6 +32,6 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleModal() {
-    this.store.dispatch(ModalActions.toggleModal());
+    this.store.dispatch(UserActions.showModal({showModal: this.isShown}));
   }
 }

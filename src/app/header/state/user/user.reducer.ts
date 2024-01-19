@@ -8,8 +8,11 @@ export const userReducer = createReducer(
     ...state,
     user: userName
   })),
-  on(UserActions.createToken, (state, { isCreated }) => ({
+  on(UserActions.isCreatedUser, (state) => {
+    return { ...state, isCreated: state.isCreated };
+  }),
+  on(UserActions.showModal, (state, { showModal }) => ({
     ...state,
-    isCreated: isCreated
+    showModal: !showModal
   }))
 );
