@@ -40,6 +40,8 @@ export class ModalComponent {
       if (isCreated) {
         this.router.navigate(['/modal']);
         this.toggleModal();
+      } else {
+        this.router.navigate(['/']);
       }
     });
   }
