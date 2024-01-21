@@ -1,4 +1,3 @@
-// countdown.actions.ts
 import { createAction, props } from '@ngrx/store';
 
 export const startCountdown = createAction('[Countdown] Start Countdown', props<{ duration: number }>());

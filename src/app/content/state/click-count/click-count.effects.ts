@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Actions, ofType, createEffect, OnInitEffects} from '@ngrx/effects';
+import {Actions, ofType, createEffect} from '@ngrx/effects';
 import {mergeMap, tap} from 'rxjs/operators';
 import * as ClickCountActions from './click-count.actions';
 import {Action} from "@ngrx/store";

@@ -6,8 +6,7 @@ import {HeaderComponent} from './header/header.component';
 import {HttpClientModule} from "@angular/common/http";
 import {ModalComponent} from './content/modal/modal/modal.component';
 import {FormsModule} from "@angular/forms";
-import {ActionReducer, ActionReducerMap, MetaReducer, StoreModule} from "@ngrx/store";
-import {contentReducer} from "./content/state/content/content.reducer";
+import {ActionReducer, MetaReducer, StoreModule} from "@ngrx/store";
 import {clickCountReducer} from "./content/state/click-count/click-count.reducer";
 import {ClickCountEffects} from "./content/state/click-count/click-count.effects";
 import {EffectsModule} from "@ngrx/effects";
@@ -44,7 +43,6 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     BrowserModule,
     HttpClientModule,
     StoreModule.forRoot({
-      content: contentReducer,
       clickCount: clickCountReducer,
       user: userReducer,
       list: listReducer,

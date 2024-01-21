@@ -6,7 +6,6 @@ import {UserState} from "./user.state";
 
 export const selectUserState = createFeatureSelector<UserState>('user');
 
-// Select specific pieces of state within the feature state
 export const selectToggle = createSelector(
   selectUserState,
   (state: UserState) => state.showModal

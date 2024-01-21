@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Store} from "@ngrx/store";
 import * as TaskActions from "./state/list/list.actions";
 import {Observable} from "rxjs";

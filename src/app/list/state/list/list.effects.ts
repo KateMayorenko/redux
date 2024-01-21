@@ -8,6 +8,7 @@ import {Task} from "./list.state";
 
 @Injectable()
 export class ListEffects {
+  // we need this effect to store actions changes in localStorage
   saveToLocalStorage$ = createEffect(() => this.actions$.pipe(
     ofType(TaskActions.addTask, TaskActions.removeTask, TaskActions.checked),
     tap(() => {

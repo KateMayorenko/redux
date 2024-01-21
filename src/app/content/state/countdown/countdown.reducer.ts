@@ -1,4 +1,3 @@
-// countdown.reducer.ts
 import { createReducer, on } from '@ngrx/store';
 import * as countdownActions from './countdown.actions';
 import { initialState } from './countdown.state';
