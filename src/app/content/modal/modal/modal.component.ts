@@ -38,10 +38,10 @@ export class ModalComponent {
       this.isCreated = isCreated;
       this.store.dispatch(UserActions.isCreatedUser({isCreated: isCreated}));
       if (isCreated) {
-        this.router.navigate(['/modal']);
+       void this.router.navigate(['/modal']);
         this.toggleModal();
       } else {
-        this.router.navigate(['/']);
+       void this.router.navigate(['/']);
       }
     });
   }

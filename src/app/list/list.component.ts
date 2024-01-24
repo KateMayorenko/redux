@@ -13,9 +13,7 @@ import {Task} from "./state/list/list.state";
 export class ListComponent {
   list$: Observable<Task[]> = this.store.select(selectTasks);
 
-  constructor(private store: Store<{ list: Task[] }>) {
-    this.list$.subscribe(res => {})
-  }
+  constructor(private store: Store<{ list: Task[] }>) {}
 
   addElement(newElement: string) {
     this.store.dispatch(TaskActions.addTask({task: newElement, checked: false}));

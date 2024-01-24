@@ -15,19 +15,16 @@ import { CountdownState } from './state/countdown/countdown.state';
 export class ContentComponent implements OnInit {
   quote: any;
   timeLeft: number = 0;
-  countdown$: Observable<number>;
+  countdown$: Observable<number> = this.store.select((state) => state.countdown.timeLeft);
   toggleButtonText = 'Pause';
 
-  todayClickCount$: Observable<number>;
-  isPaused$: Observable<boolean>;
+  todayClickCount$: Observable<number> = this.store.select((state) => state.clickCount.count);
+  isPaused$: Observable<boolean> = this.store.select((state) => state.countdown.isPaused);
 
   constructor(
     public quoteService: QuoteService,
     private store: Store<{ clickCount: ClickCountState; countdown: CountdownState }>
   ) {
-    this.todayClickCount$ = this.store.select((state) => state.clickCount.count);
-    this.countdown$ = this.store.select((state) => state.countdown.timeLeft);
-    this.isPaused$ = this.store.select((state) => state.countdown.isPaused);
 
     this.countdown$.subscribe((timeLeft) => {
       this.timeLeft = timeLeft;
