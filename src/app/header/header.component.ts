@@ -13,13 +13,13 @@ import {UserState} from "./state/user/user.state";
 })
 export class HeaderComponent implements OnInit {
 
-  showModal$: Observable<boolean> = this.store.select(selectToggle);
+  isModalShown$: Observable<boolean> = this.store.select(selectToggle);
   userName$ = this.store.select(selectUserName);
   isShown = false;
   userName = '';
 
   constructor(private store: Store<{countdown: AppState, user: UserState}>) {
-    this.showModal$.subscribe(res => {
+    this.isModalShown$.subscribe(res => {
       this.isShown = res;
     })
     this.userName$.subscribe(res => {
@@ -32,6 +32,6 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleModal() {
-    this.store.dispatch(UserActions.showModal({showModal: this.isShown}));
+    this.store.dispatch(UserActions.isModalShown({isModalShown: this.isShown}));
   }
 }

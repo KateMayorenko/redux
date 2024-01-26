@@ -1,13 +1,13 @@
 export interface UserState {
   user: string,
   isCreated: boolean,
-  showModal: boolean
+  isModalShown: boolean
 }
 
 export const initialState = {
   user: 'Default user',
   isCreated: true,
-  showModal: false
+  isModalShown: false
 }
 
 export interface AppState  {

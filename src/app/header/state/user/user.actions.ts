@@ -9,7 +9,7 @@ export const isCreatedUser = createAction(
   '[User] Check if User is created',
   props<{ isCreated: boolean }>());
 
-export const showModal = createAction(
+export const isModalShown = createAction(
   '[Modal] Show Modal',
-  props<{ showModal: boolean }>()
+  props<{ isModalShown: boolean }>()
 );

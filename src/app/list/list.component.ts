@@ -3,7 +3,7 @@ import {Store} from "@ngrx/store";
 import * as TaskActions from "./state/list/list.actions";
 import {Observable} from "rxjs";
 import {selectTasks} from "./state/list/list.selectors";
-import {Task} from "./state/list/list.state";
+import {AppState, TaskState} from "./state/list/list.state";
 
 @Component({
   selector: 'app-list',
@@ -11,9 +11,9 @@ import {Task} from "./state/list/list.state";
   styleUrls: ['./list.component.css']
 })
 export class ListComponent {
-  list$: Observable<Task[]> = this.store.select(selectTasks);
+  list$: Observable<TaskState[]> = this.store.select(selectTasks);
 
-  constructor(private store: Store<{ list: Task[] }>) {}
+  constructor(private store: Store<AppState>) {}
 
   addElement(newElement: string) {
     this.store.dispatch(TaskActions.addTask({task: newElement, checked: false}));

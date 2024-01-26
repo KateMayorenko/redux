@@ -1,7 +1,11 @@
-const localStorageInitialState = JSON.parse(localStorage.getItem('tasks') || '[]');
 
-export interface Task {
+export interface TaskState {
   task: string;
   checked: boolean;
 }
-export const initialState: Task[] = localStorageInitialState;
+
+export const initialState: TaskState[] = [];
+
+export interface AppState {
+  list: TaskState[]
+}

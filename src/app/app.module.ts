@@ -13,7 +13,6 @@ import {EffectsModule} from "@ngrx/effects";
 import {ListComponent} from './list/list.component';
 import {InputFieldComponent} from './list/input-field/input-field.component';
 import {listReducer} from "./list/state/list/list.reducer";
-import {ListEffects} from "./list/state/list/list.effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {countdownReducer} from "./content/state/countdown/countdown.reducer";
 import {CountdownEffects} from "./content/state/countdown/countdown.effects";
@@ -21,12 +20,12 @@ import {userReducer} from "./header/state/user/user.reducer";
 import {AppRoutingModule} from "./app-routing.module";
 import {localStorageSync} from "ngrx-store-localstorage";
 
-
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
-  return localStorageSync({keys: ['tasks']})(reducer);
+  return localStorageSync({ keys: ['clickCount', 'list'], rehydrate: true })(reducer);
 }
 
-const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
+
+const allMetaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 
 
 @NgModule({
@@ -47,8 +46,8 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
       user: userReducer,
       list: listReducer,
       countdown: countdownReducer
-    }, {metaReducers}),
-    EffectsModule.forRoot([ClickCountEffects, ListEffects, CountdownEffects]),
+    }, {metaReducers: allMetaReducers}),
+    EffectsModule.forRoot([ClickCountEffects, CountdownEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: false,

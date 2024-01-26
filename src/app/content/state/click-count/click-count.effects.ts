@@ -10,8 +10,8 @@ export class ClickCountEffects{
   saveClickCount$ = createEffect(() => this.actions$.pipe(
     ofType(ClickCountActions.incrementClickCount),
     tap((action) => {
-      const currentCount = JSON.parse(localStorage.getItem('clickCount') || '0');
-      localStorage.setItem('clickCount', JSON.stringify(currentCount + 1));
+      const currentCount = JSON.parse(localStorage.getItem('count') || '0');
+      localStorage.setItem('count', JSON.stringify(currentCount + 1));
     })
   ), { dispatch: false });
 
@@ -19,13 +19,13 @@ export class ClickCountEffects{
     ofType(ClickCountActions.initializeClickCount),
     mergeMap(() => {
       const today = new Date().toDateString();
-      const storedCount = localStorage.getItem('clickCount');
+      const storedCount = localStorage.getItem('count');
       let lastUpdated = localStorage.getItem('lastUpdated') || today;
       let count = storedCount ? Number(storedCount) : 0;
 
       if (lastUpdated !== today) {
         count = 0;
-        localStorage.setItem('clickCount', '0');
+        localStorage.setItem('count', '0');
         localStorage.setItem('lastUpdated', today);
       }
 

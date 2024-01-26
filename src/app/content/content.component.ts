@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuoteService } from '../services/quote.service';
-import {Observable, take} from 'rxjs';
+import { Observable, take} from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ClickCountState } from './state/click-count/click-count.state';
 import * as ClickCountActions from '../content/state/click-count/click-count.actions';
@@ -17,8 +17,9 @@ export class ContentComponent implements OnInit {
   timeLeft: number = 0;
   countdown$: Observable<number> = this.store.select((state) => state.countdown.timeLeft);
   toggleButtonText = 'Pause';
+  count = 0;
 
-  todayClickCount$: Observable<number> = this.store.select((state) => state.clickCount.count);
+  todayClickCount$: Observable<any> = this.store.select((state) => state.clickCount.count);
   isPaused$: Observable<boolean> = this.store.select((state) => state.countdown.isPaused);
 
   constructor(

@@ -8,7 +8,7 @@ export const selectUserState = createFeatureSelector<UserState>('user');
 
 export const selectToggle = createSelector(
   selectUserState,
-  (state: UserState) => state.showModal
+  (state: UserState) => state.isModalShown
 );
 
 export const selectUserName = createSelector(

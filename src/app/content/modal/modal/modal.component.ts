@@ -12,7 +12,7 @@ import {Router} from "@angular/router";
   templateUrl: './modal.component.html',
 })
 export class ModalComponent {
-  showModal$: Observable<boolean> = new Observable<boolean>();
+  isModalShown$: Observable<boolean> = new Observable<boolean>();
   userName$: Observable<string> = new Observable<string>();
   isCreated$: Observable<boolean> = new Observable<boolean>();
 
@@ -20,17 +20,17 @@ export class ModalComponent {
   isCreated = true;
 
   constructor(private store: Store<AppState>, private router: Router) {
-    this.showModal$ = this.store.select(selectToggle);
+    this.isModalShown$ = this.store.select(selectToggle);
     this.userName$ = this.store.select(selectUserName);
     this.isCreated$ = this.store.select(selectIsCreated);
 
-    this.showModal$.subscribe(isShown => {
+    this.isModalShown$.subscribe(isShown => {
       this.isShown = isShown;
     })
   }
 
   toggleModal() {
-    this.store.dispatch(UserActions.showModal({showModal: this.isShown}));
+    this.store.dispatch(UserActions.isModalShown({isModalShown: this.isShown}));
   }
 
   userIsCreated() {
