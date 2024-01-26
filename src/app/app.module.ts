@@ -20,6 +20,7 @@ import {userReducer} from "./header/state/user/user.reducer";
 import {AppRoutingModule} from "./app-routing.module";
 import {localStorageSync} from "ngrx-store-localstorage";
 import {FormattedTimePipe} from "./content/pipes/format-time.pipe";
+import {PushPipe} from "@ngrx/component";
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
   return localStorageSync({ keys: ['clickCount', 'list'], rehydrate: true })(reducer);
@@ -55,7 +56,8 @@ const allMetaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
       logOnly: false,
       name: 'redux-pomodoro',
     }),
-    AppRoutingModule
+    AppRoutingModule,
+    PushPipe
   ],
   providers: [],
   bootstrap: [AppComponent]

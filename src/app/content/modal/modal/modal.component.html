@@ -1,4 +1,4 @@
-<div *ngIf="isModalShown$ | async" class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+<div *ngIf="isModalShown$ | ngrxPush" class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
   <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
   <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -24,7 +24,7 @@
               </div>
               <div class="px-4 py-3 sm:px-6">
                 <p  *ngIf="isCreated; else userExists"
-                   class="w-full rounded-md border-gray-300 px-3 py-2 text-sm shadow-sm">{{userName$ | async}}</p>
+                   class="w-full rounded-md border-gray-300 px-3 py-2 text-sm shadow-sm">{{userName$ | ngrxPush}}</p>
 
                 <ng-template #userExists>
                   No user created. Click "Create" to continue
