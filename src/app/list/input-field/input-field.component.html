@@ -4,7 +4,7 @@
     <!-- standalone:true in order to not use NgForm directive-->
     <input type="text" id="base-input" [ngModelOptions]="{standalone: true}"
            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-           type="text" [(ngModel)]="inputValue" (keyup.enter)="addNewElement()" placeholder="press enter to add a task"
+           type="text" [(ngModel)]="inputValue" (keyup.enter)="addNewElement(inputValue)" placeholder="press enter to add a task"
     >
   </div>
 </form>
