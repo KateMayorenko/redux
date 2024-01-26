@@ -55,12 +55,6 @@ export class ContentComponent implements OnInit {
     });
   }
 
-  getFormattedTimeLeft(): string {
-    const minutes = Math.floor(this.timeLeft / 60);
-    const seconds = this.timeLeft % 60;
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  }
-
   handleClick(event: Event | undefined) {
     if (event) {
       event.stopPropagation();

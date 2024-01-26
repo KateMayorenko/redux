@@ -19,6 +19,7 @@ import {CountdownEffects} from "./content/state/countdown/countdown.effects";
 import {userReducer} from "./header/state/user/user.reducer";
 import {AppRoutingModule} from "./app-routing.module";
 import {localStorageSync} from "ngrx-store-localstorage";
+import {FormattedTimePipe} from "./content/pipes/format-time.pipe";
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
   return localStorageSync({ keys: ['clickCount', 'list'], rehydrate: true })(reducer);
@@ -36,6 +37,7 @@ const allMetaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     ModalComponent,
     ListComponent,
     InputFieldComponent,
+    FormattedTimePipe
   ],
   imports: [
     FormsModule,
