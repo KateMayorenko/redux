@@ -19,7 +19,7 @@ export class ContentComponent implements OnInit {
   toggleButtonText = 'Pause';
   count = 0;
 
-  todayClickCount$: Observable<any> = this.store.select((state) => state.clickCount.count);
+  todayClickCount$: Observable<number> = this.store.select((state) => state.clickCount.count);
   isPaused$: Observable<boolean> = this.store.select((state) => state.countdown.isPaused);
 
   constructor(
